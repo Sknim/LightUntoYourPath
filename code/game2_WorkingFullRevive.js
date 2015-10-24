@@ -76,9 +76,7 @@ Vector.prototype.plus = function(other) {
 Vector.prototype.times = function(factor) {
   return new Vector(this.x * factor, this.y * factor);
 };
-
-//Background for CSS animation purposes
-//function Background(){
+ 
   
 // A Player has a size,  and position.
 function Player(pos) {
@@ -155,6 +153,7 @@ var scale = 20;
 DOMDisplay.prototype.drawBackground = function() {
   var table = elt("table", "background");
   table.style.width = this.level.width * scale + "px";
+  table.style.color = '#CFCFD2';
 
   // Assign a class to new row element directly from the string from
   // each tile in grid
@@ -380,19 +379,21 @@ Player.prototype.act = function(step, level, keys, pos, size, actor) {
 	  this.size.y -= step;
 	  finishDelay = undefined;
 	  }
-	  
-  
-	if (level.status == 'revive'){
+	  if (level.status == 'revive'){
 		for(var i = 0; i < 1; i++)
 	{this.pos.y -= i;
 	  this.size.y += i;
 	  finishDelay = undefined;}
+	  //ensures they can't live below a certain size
+	      if (this.size.y < .2)
+		  {console.log('dumb');
+		  level.status = 'lost'; 
+		  finishDelay = .2;}
 	  }
     if (level.status == 'won' && level.type == 'wall'){
-	  finishDelay = .1;
-	if (this.size.y < .1){
-	  finishDelay = .2;
-	  }}}
+	  finishDelay = 1;}}
+	 
+	  
 Level.prototype.playerTouched = function(type, actor) {
   if (type == 'lava' && this.status == null) {
     this.status = 'lost';
@@ -411,14 +412,15 @@ Level.prototype.playerTouched = function(type, actor) {
 	 return actor.type == 'coin';})){
 	     this.status = 'won';
 		  this.finishDelay = .2;
-	 }}  if (type == 'lava' && this.status == 'revive') {
-     this.status = 'lost';
-	this.finishDelay = .7;}
+	 }} 
+	 if (type == 'lava' && this.status == 'revive') {
+        this.status = 'lost';
+	   this.finishDelay = .7;}
 	if (type == "enemy" && this.status == 'revive') {
-    this.status = 'lost';
-	this.finishDelay = .7;}};
-
- 
+       this.status = 'lost';
+	   this.finishDelay = .7;
+	}}
+	
 // Arrow key codes for readibility
 var arrowCodes = {37: "left", 38: "up", 39: "right"};
 
