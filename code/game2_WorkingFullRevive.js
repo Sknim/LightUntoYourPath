@@ -1,3 +1,4 @@
+//if player hits lava first revive makes invincivble
 // Map each class of actor to a character
 var actorChars = {
   "@": Player,
@@ -76,7 +77,9 @@ Vector.prototype.times = function(factor) {
   return new Vector(this.x * factor, this.y * factor);
 };
 
-
+//Background for CSS animation purposes
+//function Background(){
+  
 // A Player has a size,  and position.
 function Player(pos) {
   this.pos = pos.plus(new Vector(0, -0.5));
@@ -403,17 +406,17 @@ Level.prototype.playerTouched = function(type, actor) {
 	this.actors = this.actors.filter(function(other) {
       return other != actor;
 	  });
-	  if (type == 'lava' && this.status == 'revive') {
-     this.status = 'lost';
-	this.finishDelay = .7;}
-	if (type == "enemy" && this.status == 'revive') {
-    this.status = 'lost';
-	this.finishDelay = .7;}
+	
 	 if (!this.actors.some(function(actor){
 	 return actor.type == 'coin';})){
 	     this.status = 'won';
 		  this.finishDelay = .2;
-	 }}};
+	 }}  if (type == 'lava' && this.status == 'revive') {
+     this.status = 'lost';
+	this.finishDelay = .7;}
+	if (type == "enemy" && this.status == 'revive') {
+    this.status = 'lost';
+	this.finishDelay = .7;}};
 
  
 // Arrow key codes for readibility

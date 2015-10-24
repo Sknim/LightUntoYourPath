@@ -1,6 +1,66 @@
-.background    { background: rgb(30, 30, 40);
-                 table-layout: fixed;
+.background    { background: #1C1C28;
+					 table-layout: fixed;
                  border-spacing: 0;   }
+.background2    { background: #282834;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background3    { background: #34343F;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background4   { background: #40404A;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background5    { background: #4C4C56;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background 6   { background: #585861;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background7    { background: #64646C;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background8    { background: #707077;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background9    { background: #88888E;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background10    { background: #939399;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background11    { background: #9F9FA5;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background12   { background: #ABABB0;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background13    { background: #B7B7BB;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background14    { background: #C3C3C6;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background15   { background: #CFCFD2;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background16    { background: #DBDBDD;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background17    { background: #E7E7E8;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background18    { background: #F3F3F4;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background19    { background: #FFFFFF;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+				 
+				 
+				 
+				 
+				 
+				 
 .background td { padding: 0;          }
 .lava          { background: rgb(40, 20, 40); }
 .wall          { background: black;   }
