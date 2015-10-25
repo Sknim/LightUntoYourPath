@@ -150,10 +150,20 @@ function DOMDisplay(parent, level) {
 
 var scale = 20;
 
+ /*var animateBackground = function() { 
+var backgrounds = [elt('table', 'background'), elt('table', 'background1'), elt('table', 'background2'), elt('table', 'background3'), elt('table', 'background4'), elt('table', 'background5'), elt('table', 'background6'), elt('table', 'background7'),elt('table', 'background8'),elt('table', 'background9'),elt('table', 'background10'),elt('table', 'background11'),elt('table', 'background12'),elt('table', 'background13'),elt('table', 'background14'), elt('table', 'background15'), elt('table', 'background16'), elt('table', 'background17'), elt('table', 'background18')];
+
+   for(var i = 0; i< backgrounds.lenth; i++){
+   console.log(backgrounds);}}
+      
+if (4 === 4){
+animateBackground;}*/
+
 DOMDisplay.prototype.drawBackground = function() {
   var table = elt("table", "background");
   table.style.width = this.level.width * scale + "px";
-  table.style.color = '#CFCFD2';
+  table.style.color = '#939399';
+ 
 
   // Assign a class to new row element directly from the string from
   // each tile in grid
@@ -324,9 +334,12 @@ var maxStep = 0.05;
 
 var playerXSpeed = 7;
 
-Player.prototype.moveX = function(step, level, keys) {
+Player.prototype.moveX = function(step, level, keys, style) {
   this.speed.x = 0;
-  if (keys.left) this.speed.x -= playerXSpeed;
+  if (keys.left){
+  this.speed.x -= playerXSpeed;
+  document.getElementsByClassName('player').backgroundImage = "GuyLeft.png";}
+  
   if (keys.right) this.speed.x += playerXSpeed;
 
   var motion = new Vector(this.speed.x * step, 0);
