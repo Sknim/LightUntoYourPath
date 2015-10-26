@@ -411,7 +411,7 @@ Player.prototype.act = function(step, level, keys, pos, size, actor) {
 	  finishDelay = undefined;}
 	  //ensures they can't live below a certain size
 	      if (this.size.y <= .1)
-		  {console.log('dumb');
+		  {console.log('You\'re too small.');
 		  level.status = 'lost'; 
 		  finishDelay = .2;}
 	  }
