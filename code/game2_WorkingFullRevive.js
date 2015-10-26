@@ -2,11 +2,13 @@
 // Map each class of actor to a character
 var actorChars = {
   "@": Player,
-  "o": Coin, // A coin will wobble up and down
+  "o": Light, // A light will wobble up and down
   "e": Enemy,
-  "=": Lava, "|": Lava, "v": Lava                              //
+  "=": Lava, "|": Lava, "v": Lava
+    //
 };
-
+var textChars = {
+   "t": Text};
 
 function Level(plan) {
   // Use the length of a single row to set the width of the level
@@ -41,6 +43,8 @@ function Level(plan) {
       // Because there is a third case (space ' '), use an "else if" instead of "else"
       else if (ch == "!")
         fieldType = "lava";
+	  else if (ch == "t")
+	    fieldType = 'text';
 
       // "Push" the fieldType, which is a string, onto the gridLine array (at the end).
       gridLine.push(fieldType);
@@ -87,13 +91,20 @@ function Player(pos) {
 Player.prototype.type = "player";
 
 // Add a new actor type as a class
-function Coin(pos) {
+function Light(pos) {
   this.basePos = this.pos = pos.plus(new Vector(0.2, 0.1));
   this.size = new Vector(0.6, 0.6);
   // Make it go back and forth in a sine wave.
   this.wobble = Math.random() * Math.PI * 2;
 }
-Coin.prototype.type = "coin";
+Light.prototype.type = "light";
+
+//create a new actor type as a class
+function Text(pos) {
+  this.basePos = this.pos = pos.plus(new Vector(0.2, -0.3));
+  this.size = new Vector(.2, .3);
+}
+Text.prototype.type = "text";
 
 //create a new actor type as a class
 function Enemy(pos) {
@@ -314,7 +325,7 @@ var maxStep = 0.05;
 
 var wobbleSpeed = 8, wobbleDist = 0.07;
 
-Coin.prototype.act = function(step) {
+Light.prototype.act = function(step) {
   this.wobble += step * wobbleSpeed;
   var wobblePos = Math.sin(this.wobble) * wobbleDist;
   this.pos = this.basePos.plus(new Vector(0, wobblePos));
@@ -322,7 +333,7 @@ Coin.prototype.act = function(step) {
 
 var maxStep = 0.05;
 
-var walkSpeed = 2, walkDist = 3;
+var walkSpeed = 5, walkDist = 4;
 
 Enemy.prototype.act = function(step) {
   this.walk += step * walkSpeed;
@@ -332,16 +343,17 @@ Enemy.prototype.act = function(step) {
 
 var maxStep = 0.05;
 
-var playerXSpeed = 7;
+var playerXSpeed = 14;
 
-Player.prototype.moveX = function(step, level, keys, style) {
+Player.prototype.moveX = function(step, level, keys, player) {
   this.speed.x = 0;
   if (keys.left){
+  var players = document.getElementsByClassName('player');
   this.speed.x -= playerXSpeed;
-  document.getElementsByClassName('player').backgroundImage = "GuyLeft.png";}
+    players.backgroundImage = 'GuyLeft.png';
+    }
   
   if (keys.right) this.speed.x += playerXSpeed;
-
   var motion = new Vector(this.speed.x * step, 0);
   // Find out where the player character will be in this frame
   var newPos = this.pos.plus(motion);
@@ -355,7 +367,7 @@ Player.prototype.moveX = function(step, level, keys, style) {
     this.pos = newPos;
   };
 
-var gravity = 40;
+var gravity = 52;
 var jumpSpeed = 20;
 
 
@@ -388,8 +400,8 @@ Player.prototype.act = function(step, level, keys, pos, size, actor) {
 	
 	//losing animation
 	if (level.status == 'lost')
-	{ this.pos.y += step;
-	  this.size.y -= step;
+	{ this.pos.y += 0.01;
+	  this.size.y -= 0.01;
 	  finishDelay = undefined;
 	  }
 	  if (level.status == 'revive'){
@@ -398,7 +410,7 @@ Player.prototype.act = function(step, level, keys, pos, size, actor) {
 	  this.size.y += i;
 	  finishDelay = undefined;}
 	  //ensures they can't live below a certain size
-	      if (this.size.y < .2)
+	      if (this.size.y <= .1)
 		  {console.log('dumb');
 		  level.status = 'lost'; 
 		  finishDelay = .2;}
@@ -410,29 +422,44 @@ Player.prototype.act = function(step, level, keys, pos, size, actor) {
 Level.prototype.playerTouched = function(type, actor) {
   if (type == 'lava' && this.status == null) {
     this.status = 'lost';
-	this.finishDelay = 1.5;
+	this.finishDelay = 4;
 	}else  if (type == "enemy" && this.status == null) {
     this.status = 'lost';
-	this.finishDelay = 1.5;
-	  }else if (this.status == 'lost' && type == 'coin'){
+	this.finishDelay = 4;
+	  }else if (this.status == 'lost' && type == 'light'){
 	 this.status = 'revive';}
-	 else if (type == 'coin'){
+	 else if (type == 'light'){
 	this.actors = this.actors.filter(function(other) {
       return other != actor;
 	  });
 	
 	 if (!this.actors.some(function(actor){
-	 return actor.type == 'coin';})){
+	 return actor.type == 'light';})){
 	     this.status = 'won';
 		  this.finishDelay = .2;
 	 }} 
 	 if (type == 'lava' && this.status == 'revive') {
         this.status = 'lost';
-	   this.finishDelay = .7;}
-	if (type == "enemy" && this.status == 'revive') {
+	   this.finishDelay = 2;
+	   if (this.status == 'lost' && type == 'light'){
+	   this.status = 'revive';}}
+	else if (type == "enemy" && this.status == 'revive') {
        this.status = 'lost';
-	   this.finishDelay = .7;
-	}}
+	   this.finishDelay = 2;
+	   if (this.status == 'lost' && type == 'light'){
+	   this.status = 'revive';}}
+	    else if (type == 'light'){
+	this.actors = this.actors.filter(function(other) {
+      return other != actor;
+	  });
+	
+	 if (!this.actors.some(function(actor){
+	 return actor.type == 'light';})){
+	     this.status = 'won';
+		  this.finishDelay = .2;
+	 }} 
+	
+	}
 	
 // Arrow key codes for readibility
 var arrowCodes = {37: "left", 38: "up", 39: "right"};
