@@ -13,40 +13,23 @@ var textChars = {
 function Level(plan) {
   // Use the length of a single row to set the width of the level
   this.width = plan[0].length;
-  // Use the number of rows to set the height
-
   this.height = plan.length;
-
-  // Store the individual tiles in our own, separate array
   this.grid = [];
-
-  // Store a list of actors to process each frame
   this.actors = [];
 
-  // Loop through each row in the plan, creating an array in our grid
   for (var y = 0; y < this.height; y++) {
     var line = plan[y], gridLine = [];
-
-    // Loop through each array element in the inner array for the type of the tile
     for (var x = 0; x < this.width; x++) {
-      // Get the type from that character in the string. It can be 'x', '!' or ' '
-      // If the character is ' ', assign null.
-
       var ch = line[x], fieldType = null;
       var Actor = actorChars[ch];
-      // Use if and else to handle the three cases
-      if (Actor)
-        // Create a new actor at that grid position.
-        this.actors.push(new Actor(new Vector(x, y), ch));
-      else if (ch == "x")
-        fieldType = "wall";
-      // Because there is a third case (space ' '), use an "else if" instead of "else"
-      else if (ch == "!")
-        fieldType = "lava";
-	  else if (ch == "t")
-	    fieldType = 'text';
-
-      // "Push" the fieldType, which is a string, onto the gridLine array (at the end).
+		  if (Actor)
+			this.actors.push(new Actor(new Vector(x, y), ch));
+		  else if (ch == "x")
+			fieldType = "wall";
+		  else if (ch == "!")
+			fieldType = "lava";
+		  else if (ch == "t")
+			fieldType = 'text';
       gridLine.push(fieldType);
     }
     // Push the entire row onto the array of rows.
@@ -161,15 +144,6 @@ function DOMDisplay(parent, level) {
 
 var scale = 20;
 
- /*var animateBackground = function() { 
-var backgrounds = [elt('table', 'background'), elt('table', 'background1'), elt('table', 'background2'), elt('table', 'background3'), elt('table', 'background4'), elt('table', 'background5'), elt('table', 'background6'), elt('table', 'background7'),elt('table', 'background8'),elt('table', 'background9'),elt('table', 'background10'),elt('table', 'background11'),elt('table', 'background12'),elt('table', 'background13'),elt('table', 'background14'), elt('table', 'background15'), elt('table', 'background16'), elt('table', 'background17'), elt('table', 'background18')];
-
-   for(var i = 0; i< backgrounds.lenth; i++){
-   console.log(backgrounds);}}
-      
-if (4 === 4){
-animateBackground;}*/
-
 DOMDisplay.prototype.drawBackground = function() {
   var table = elt("table", "background");
   table.style.width = this.level.width * scale + "px";
@@ -195,8 +169,7 @@ DOMDisplay.prototype.drawActors = function() {
 
   // Create a new element for each actor each frame
   this.level.actors.forEach(function(actor) {
-    var rect = wrap.appendChild(elt("div",
-                                    "actor " + actor.type));
+    var rect = wrap.appendChild(elt("div", "actor " + actor.type));
     rect.style.width = actor.size.x * scale + "px";
     rect.style.height = actor.size.y * scale + "px";
     rect.style.left = actor.pos.x * scale + "px";
@@ -217,10 +190,7 @@ DOMDisplay.prototype.drawFrame = function() {
 DOMDisplay.prototype.scrollPlayerIntoView = function() {
   var width = this.wrap.clientWidth;
   var height = this.wrap.clientHeight;
-
-  // We want to keep player at least 1/3 away from side of screen
   var margin = width / 3;
-
   // The viewport
   var left = this.wrap.scrollLeft, right = left + width;
   var top = this.wrap.scrollTop, bottom = top + height;
@@ -240,8 +210,6 @@ DOMDisplay.prototype.scrollPlayerIntoView = function() {
     this.wrap.scrollTop = center.y + margin - height;
 };
 
-// Remove the wrap element when clearing the display
-// This will be garbage collected
 DOMDisplay.prototype.clear = function() {
   this.wrap.parentNode.removeChild(this.wrap);
 };
@@ -322,27 +290,23 @@ Lava.prototype.act = function(step, level) {
 };
 
 var maxStep = 0.05;
-
 var wobbleSpeed = 8, wobbleDist = 0.07;
 
-Light.prototype.act = function(step) {
-  this.wobble += step * wobbleSpeed;
-  var wobblePos = Math.sin(this.wobble) * wobbleDist;
-  this.pos = this.basePos.plus(new Vector(0, wobblePos));
-};
+	Light.prototype.act = function(step) {
+	  this.wobble += step * wobbleSpeed;
+	  var wobblePos = Math.sin(this.wobble) * wobbleDist;
+	  this.pos = this.basePos.plus(new Vector(0, wobblePos));
+	};
+	
+	var maxStep = 0.05;
+	var walkSpeed = 5, walkDist = 4;
+	Enemy.prototype.act = function(step) {
+	  this.walk += step * walkSpeed;
+	  var walkPos = Math.cos(this.walk) * walkDist;
+	  this.pos = this.basePos.plus(new Vector(walkPos, 0));
+	};
 
 var maxStep = 0.05;
-
-var walkSpeed = 5, walkDist = 4;
-
-Enemy.prototype.act = function(step) {
-  this.walk += step * walkSpeed;
-  var walkPos = Math.cos(this.walk) * walkDist;
-  this.pos = this.basePos.plus(new Vector(walkPos, 0));
-};
-
-var maxStep = 0.05;
-
 var playerXSpeed = 14;
 
 Player.prototype.moveX = function(step, level, keys, player) {
@@ -350,14 +314,12 @@ Player.prototype.moveX = function(step, level, keys, player) {
   if (keys.left){
   var players = document.getElementsByClassName('player');
   this.speed.x -= playerXSpeed;
-    players.backgroundImage = 'GuyLeft.png';
+    players.backgroundImage = 'img/GuyLeft.png';
     }
   
   if (keys.right) this.speed.x += playerXSpeed;
   var motion = new Vector(this.speed.x * step, 0);
-  // Find out where the player character will be in this frame
   var newPos = this.pos.plus(motion);
-  // Find if there's an obstacle there
   var obstacle = level.obstacleAt(newPos, this.size);
   //Handle lava by calling playerTouched
   if (obstacle)
