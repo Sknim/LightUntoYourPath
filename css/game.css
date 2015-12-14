@@ -58,9 +58,52 @@
                  border-spacing: 0;   }				 
 				 
 				 
-				 
-				 
-				 
+.canvas {
+	position: fixed;
+	min-width: 100%;
+	min-height: 100%
+}
+.canvasOne {padding: 0;}	
+.videoElement {
+	 position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+ background: url('Produce_1.mov');
+  background-size: cover;
+  transition: 1s opacity;
+}			 
+#titlePage {
+	font-family: Helvetica;
+	background: rgb(0,0,0);
+	color: white;
+	padding: 2rem;
+	width: 100%;
+	margin:0;
+	float:center;
+	font-size: 1.2rem;
+}	
+h1 {
+	font-size: 3rem;
+	margin-top: 0;
+}	 
+#titlePage button {
+	width: 80%;
+	padding: .4rem;
+	border: none;
+	margin: 1rem auto;
+	font-size: 1.3rem;
+	background: rgba(255,255,255,0.23);
+	color: #fff;
+	border-radius: 3px;
+	cursor: pointer;
+	transition: .3s background;
+}
 				 
 .background td { padding: 0;          }
 .lava          { background: rgb(40, 20, 40); }

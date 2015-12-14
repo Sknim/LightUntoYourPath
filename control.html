@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<title>LUYP</title>
+<script src="code/canvasdisplay.js"></script>
+<script src="code/game2_WorkingFullRevive.js"></script>
+<script src="code/game_levels.js"></script>
+<link rel="stylesheet" href="css/game.css">
+
+<script>
+
+ function init() {
+	var canvas = document.getElementById('canvasOne');
+	var context = canvas.getContext('2d');
+	var beginButton = document.getElementById('titlePage');
+	resizeCanvas();
+	drawTitle();
+	 
+	}
+
+function videoLoaded() {
+	canvasApp();
+
+}	
+
+function canvasApp() {
+
+  function  drawScreen () {
+
+		//Background
+		
+		context.fillStyle = 'black';
+		context.fillRect(0, 0, canvas.width, canvas.height);
+		//Box
+		context.strokeStyle = '#000000'; 
+		context.drawImage(videoElement , 0, 0);  			
+	}	
+	
+	var canvas = document.getElementById('canvasOne');
+	var context = canvas.getContext('2d');
+	videoElement.play();
+	setInterval(drawScreen, 33);	
+	
+}
+ function drawTitle() {
+	//actual title	
+	var beginButton = document.getElementById('titlePage');
+	var canvas = document.getElementById('canvasOne');
+	var context = canvas.getContext('2d');
+	context.rect(20,20,150,100);
+	context.fillStyle = 'rgba(250,250,250,0.3)';
+	context.fillRect(20,20,150,100);
+	videoElement = document.createElement("video");
+		videoDiv = document.createElement('div');
+		titlePage.appendChild(videoDiv);
+		videoDiv.appendChild(videoElement);
+		videoDiv.setAttribute("style", "display:none;");
+		videoElement.loop = true;
+		if (videoElement == "") {
+			alert("no video support");
+			return;
+		}
+		videoElement.setAttribute("src", "css/Produce_1.mov");
+		videoElement.addEventListener("canplaythrough",videoLoaded,false);
+		beginButton.addEventListener('click',videoDiv.setAttribute("style", "display:none;"),false);
+	document.getElementById('titlePage').addEventListener('click', game, true);
+	}
+function game(){
+	
+	var beginButton = document.getElementById('titlePage');
+	//videoDiv.removeChild(videoElement);
+	videoDiv.style.visibility='hidden';
+	beginButton.style.visibility='hidden';	
+	runGame(GAME_LEVELS, CanvasDisplay);
+}
+function resizeCanvas() {
+var canvas = document.getElementById('canvasOne');
+	var context = canvas.getContext('2d');
+	canvas.width = window.innerWidth-20;
+	canvas.height = window.innerHeight-20;
+}
+function fillBackgroundColor() {
+	 //var colors = ["white", "yellow", "blue", "red"];
+	 //var bgColor = colors[Math.floor(Math.random() * colors.length)];
+	 context.fillStyle = 'black';
+	 context.fillRect(0, 0, canvas.width, canvas.height);
+	 }
+window.onload = init;
+</script>
+</head>
+<body>
+
+
+
+
+<div id="titlePage">
+<canvas id="canvasOne" width="500" height="300">
+ Your browser does not support the HTML 5 Canvas. 
+</canvas>
+<h1>Light Unto Your Path</h1>
+<button id="button">Begin</button>
+</div>
+</body>	 
+</html>

@@ -11,6 +11,12 @@ function CanvasDisplay(parent, level) {
   this.canvas.height = Math.min(450, level.height * scale);
   parent.appendChild(this.canvas);
   this.cx = this.canvas.getContext("2d");
+  function resizeCanvas() {
+	this.canvas = document.createElement("canvas");
+	this.canvas.width = window.innerWidth;
+	this.canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
 
   this.level = level;
   this.animationTime = 0;
@@ -121,27 +127,38 @@ CanvasDisplay.prototype.drawPlayer = function(x, y, width,
   
   this.cx.save();
   if (this.level.status == "lost"){
+	  var burn = function(player){
 	  this.cx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-	  this.cx.fillStyle = [red];
+	  this.cx.player.fillStyle = "rgb(15, 15, 20)";
 	  this.cx.globalCompositeOperation = 'source-in';
 	  this.cx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 	this.cx.restore();
 	}
+  }
 };
 
 CanvasDisplay.prototype.drawActors = function() {
   this.level.actors.forEach(function(actor) {
-    var width = actor.size.x * scale;
-    var height = actor.size.y * scale;
-    var x = (actor.pos.x - this.viewport.left) * scale;
-    var y = (actor.pos.y - this.viewport.top) * scale;
-    if (actor.type == "player") {
-      this.drawPlayer(x, y, width, height);
-    } else {
-      var tileX = (actor.type == "light" ? 2 : 1) * scale;
-      this.cx.drawImage(otherSprites,
-                        tileX*2, 3, width, height,
-                        x,     y, width, height);
-    }
+   var width = actor.size.x * scale;
+   var heightPlayer = actor.size.y * scale; 
+   var heightActors = actor.size.y * scale +5; 
+   var x = (actor.pos.x - this.viewport.left) * scale;
+   var y = (actor.pos.y - this.viewport.top) * scale;
+	  if (actor.type == "player") {
+			  this.drawPlayer(x, y, width, heightPlayer);
+			} 
+			if (actor.type == 'enemy'){
+				var tileX = (actor.type == 'enemy' ? 2.01: 1) * scale;
+			  this.cx.drawImage(otherSprites,
+								tileX, 0, width-2, heightActors,
+								x,     y, width-2, heightActors);
+			}
+			if (actor.type == 'light'){
+				var tileX = (actor.type == 'light' ? 2.7: 1) * scale;
+				this.cx.drawImage(otherSprites,
+								  tileX, 0, width, heightActors,
+								  x, y, width, heightActors);
+								  
+		}
   }, this);
 };
