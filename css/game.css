@@ -1,0 +1,135 @@
+
+.background    { background: #1C1C28;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background1    { background: #282834;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background2    { background: #34343F;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background3   { background: #40404A;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background4    { background: #4C4C56;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background5   { background: #585861;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background6    { background: #64646C;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background7    { background: #707077;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background8    { background: #88888E;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background9    { background: #939399;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background10    { background: #9F9FA5;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background11   { background: #ABABB0;
+					 table-layout: fixed;
+                 border-spacing: 0;   }
+.background12    { background: #B7B7BB;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background13    { background: #C3C3C6;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background14   { background: #CFCFD2;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background15    { background: #DBDBDD;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background16    { background: #E7E7E8;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background17    { background: #F3F3F4;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+.background18    { background: #FFFFFF;
+					 table-layout: fixed;
+                 border-spacing: 0;   }				 
+				 
+				 
+.canvas {
+	position: fixed;
+	min-width: 100%;
+	min-height: 100%
+}
+.canvasOne {padding: 0;}	
+.videoElement {
+	 position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+ background: url('Produce_1.m4v');
+  background-size: cover;
+  transition: 1s opacity;
+}			 
+#titlePage {
+	font-family: Helvetica;
+	background: rgb(0,0,0);
+	color: white;
+	padding: 2rem;
+	width: 100%;
+	margin:0;
+	float:center;
+	font-size: 1.2rem;
+}	
+h1 {
+	font-size: 3rem;
+	margin-top: 0;
+}	 
+#titlePage button {
+	width: 80%;
+	padding: .4rem;
+	border: none;
+	margin: 1rem auto;
+	font-size: 1.3rem;
+	background: rgba(255,255,255,0.23);
+	color: #fff;
+	border-radius: 3px;
+	cursor: pointer;
+	transition: .3s background;
+}
+				 
+.background td { padding: 0;          }
+.lava          { background: rgb(40, 20, 40); }
+.wall          { background: black;   }
+
+.actor  { position: absolute;  }
+.light   { background: rgb(250, 250, 250); 
+box-shadow: -4px -7px 8px white, 4px -7px 8px white; }
+.player { background-image: url("Guy.png");}
+.text {background: rgb(30, 10, 10);
+box-shadow: -100px -50px 40px red, -10px 7px -8px red;}
+
+.enemy { background: rgb(10, 10,10);
+box-shadow: -4px -7px 8px red, 4px -7px 8px red;}
+
+.game {
+  overflow: hidden;
+  max-width: 600px;
+  max-height: 450px;
+  position: relative;
+}
+
+.lost .player {
+  background: rgb(10, 10, 10); 
+  box-shadow: -4px -7px 8px red, 4px -7px 8px orange, -8px -14px 16px grey;
+}
+.won .player {
+  box-shadow: -4px -7px 8px white, 4px -7px 8px white;
+}
